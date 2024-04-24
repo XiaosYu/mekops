@@ -1,0 +1,30 @@
+﻿@page "/counter"
+
+<Table TItem="TbLog" @ref="MainTable"
+       IsPagination="true" SearchDialogShowMaximizeButton="false"
+       IsStriped="true" IsBordered="true" SearchMode="SearchMode.Popup" SearchModel="@SearchModel"
+       ShowToolbar="true" ShowAddButton="false" ShowEditButton="false" ShowDeleteButton="false" ShowSearch="true"
+       ShowExtendDeleteButton="false" ShowExtendEditButton="false" ShowExtendButtons="false" OnQueryAsync="OnSearchModelQueryAsync">
+    <TableColumns>
+        <TableColumn Filterable="true" Sortable="true" @bind-Field="@context.Id" Text="序号"/>
+        <TableColumn Filterable="true" Sortable="true" @bind-Field="@context.DisplayEventType" Text="事件类型"/>
+        <TableColumn Filterable="true" Sortable="true" @bind-Field="@context.DisplayTriggerCans" Text="触发垃圾桶"/>
+        <TableColumn Filterable="true" Sortable="true" @bind-Field="@context.TriggerTime" Text="触发时间"/>
+    </TableColumns>
+    <SearchTemplate Context="model">
+        <div class="row">
+            <div class="col-12">
+                <Select Items="SelectedEventType" @bind-Value="@model!.DisplayEventType" ShowLabel="true" DisplayText="事件类型" />
+            </div>
+            <div class="col-12">
+                <Select Items="SelectedTriggerCans" @bind-Value="@model!.DisplayTriggerCans" ShowLabel="true" DisplayText="事件类型" />
+            </div>
+            <div class="col-12">
+                <DateTimePicker @bind-Value="StartDate" ShowLabel="true" DisplayText="开始时间"/>
+            </div>
+            <div class="col-12">
+                <DateTimePicker @bind-Value="EndDate" ShowLabel="true" DisplayText="结束时间" />
+            </div>
+        </div>
+    </SearchTemplate>
+</Table>

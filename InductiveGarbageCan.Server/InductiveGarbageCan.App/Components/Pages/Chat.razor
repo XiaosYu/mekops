@@ -1,0 +1,50 @@
+﻿@page "/chat"
+
+<div class="chat-title">环保助手</div>
+<div class="chat-body">
+    @if (Messages.Count == 2)
+    {
+        <div class="chat-welcome">
+            <div class="chat-welcome-icon">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+            <div class="chat-welcome-body">
+                <div class="chat-welcome-title">开始询问</div>
+                <div class="chat-welcome-content">您可以询问关于你的助手一切事情，它对于城市垃圾环保回收特别在行</div>
+            </div>
+        </div>
+    }
+    @foreach (var message in Messages[2..])
+    {
+        <div class="@GetStackClass(message.Role)" @key="message">
+            <div class="msg-role">
+                @if (message.Role == ChatRole.User)
+                {
+                    <img src="./favicon.png">
+                }
+                else
+                {
+                    <i class="fa-solid fa-robot"></i>
+                }
+            </div>
+            <div class="msg-body">
+                <div class="msg-time">@message.Time.ToString("HH:mm:ss")</div>
+                <div>@message.Content</div>
+                @if (message.Role == ChatRole.Assistant)
+                {
+                    <div class="msg-desc">AI-generated content may be incorrect</div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+<div class="chat-footer">
+    <Textarea Id="@Id" class="chat-footer-tx" rows="3" @bind-Value="@Context" PlaceHolder="Type user query here. (Shift + Enter for new line)"></Textarea>
+    <div class="chat-buttons">
+        <Button Icon="fa-regular fa-paper-plane" Color="Color.Primary" OnClick="GetCompletionsAsync" IsAsync="true" class="btn-send"></Button>
+        <DialButton Icon="fas fa-bars-staggered" Color="Color.Secondary" class="btn-clear" Placement="Placement.BottomStart" DialMode="DialMode.Linear" OnClick="OnClickExtensions">
+            <DialButtonItem Icon="fas fa-globe" Value="data"/>
+        </DialButton>  
+    </div>
+</div>

@@ -1,0 +1,81 @@
+﻿@page "/about"
+
+@inject DataService service
+
+<Card>
+    <BodyTemplate>
+        <p>项目名称:智能城市垃圾桶分类管理系统</p>
+        <p>开始开发时间:2024年3月28日</p>
+        <Divider/>
+        <div class="row">
+            <div class="col-12 text-center">
+                开发人员如下
+            </div>
+            <div class="col-6 text-center">
+                <Avatar Url="./images/ljy.png" IsCircle="true" Size="Size.ExtraExtraLarge" />
+                <p>李靖宇</p>
+            </div>
+            <div class="col-6 text-center">
+                <Avatar Url="./images/hq.png" IsCircle="true" Size="Size.ExtraExtraLarge" />
+                <p>何倩</p>
+            </div>
+            <div class="col-6 text-center">
+                <Avatar Url="./images/ck.png" IsCircle="true" Size="Size.ExtraExtraLarge" />
+                <p>陈康</p>
+            </div>
+            <div class="col-6 text-center">
+                <Avatar Url="./images/wsy.png" IsCircle="true" Size="Size.ExtraExtraLarge" />
+                <p>王诗雨</p>
+            </div>
+        </div>
+        <Divider />
+        <div class="row">
+            <div class="col-12 text-center">
+                开发不易，喝杯咖啡
+            </div>
+            <div class="col-12">
+                <ImageViewer Url="./images/hqwx.png" FitMode="ObjectFitMode.Fill" />
+            </div>
+        </div>
+        <Divider />
+        <div class="text-center">
+            <div>
+                以下为全局信息
+            </div>
+            <div>
+                <FloatingLabel DisplayText="服务器信息" @bind-Value="@CurrentUri" @onfocusout="OnFocusOut" />
+                当前服务器连接状态<br />
+                @if(OnConnected)
+                {
+                    <p style="color:green">Connection</p>
+                }
+                else
+                {
+                    <p style="color:red">Disconnection</p>
+                }
+            </div>
+        </div>
+    </BodyTemplate>
+</Card>
+
+@code
+{
+    private bool OnConnected = false;
+    private string CurrentUri = string.Empty;
+
+    private string CurrentId = new string(Random.Shared.GetItems<char>("0123456789", 5));
+
+    protected override async Task OnInitializedAsync()
+    {
+        CurrentUri = ServiceBase.BaseUri;
+        OnConnected = await service.IsConnected();
+        System.Diagnostics.Debug.WriteLine(CurrentId);
+        await base.OnInitializedAsync();
+    }
+
+    private void OnFocusOut()
+    {
+        ServiceBase.BaseUri = CurrentUri;
+    }
+
+}

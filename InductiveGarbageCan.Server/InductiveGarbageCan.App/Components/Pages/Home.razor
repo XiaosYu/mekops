@@ -1,0 +1,61 @@
+﻿@page "/"
+
+<Card>
+    <BodyTemplate>
+        <h5>当前软件版本:1.0.2</h5>
+        <p class="card-text">日志记录数量:@TbLogs.Count</p>
+    </BodyTemplate>
+</Card>
+<br/>
+
+<Card>
+    <BodyTemplate>
+        <div class="row g-2">
+            <div class="col-6 text-center">
+                <Badge IsPill="true" Color="Color.Primary">湿垃圾</Badge>
+                <Circle Value="@CurrentCans[0]" Color="Color.Primary" StrokeWidth="10">
+                    <div>
+                        @CurrentCans[0]/100<br />
+                        历史累计次数<br />
+                        @GetCansCount(0)
+                    </div>
+                </Circle>
+            </div>
+            <div class="col-6 text-center">
+                <Badge IsPill="true" Color="Color.Success">可回收垃圾</Badge>
+                <Circle Value="@CurrentCans[1]" Color="Color.Success" StrokeWidth="10">
+                    <div>
+                        @CurrentCans[1]/100<br />
+                        历史累计次数<br />
+                        @GetCansCount(1)
+                    </div>
+                </Circle>
+            </div>
+            <div class="col-6 text-center">
+                <Badge IsPill="true" Color="Color.Warning">干垃圾</Badge>
+                <Circle Value="@CurrentCans[2]" Color="Color.Warning" StrokeWidth="10">
+                    <div>
+                        @CurrentCans[2]/100<br />
+                        历史累计次数<br />
+                        @GetCansCount(2)
+                    </div>
+                </Circle>
+            </div>
+            <div class="col-6 text-center">
+                <Badge IsPill="true" Color="Color.Danger">有害垃圾</Badge>
+                <Circle Value="@CurrentCans[3]" Color="Color.Danger" StrokeWidth="10">
+                    <div>
+                        @CurrentCans[3]/100<br />
+                        历史累计次数<br />
+                        @GetCansCount(3)
+                    </div>
+                </Circle>
+            </div>
+        </div>
+        <br/>
+        <div>
+            <DateTimePicker @bind-Value="NextClearTime" ShowLabel="true" DisplayText="预测下一次清理时间" ViewMode="DatePickerViewMode.DateTime" DateTimeFormat="yyyy-MM-dd HH:mm:ss" IsDisabled="true"/>
+        </div>
+    </BodyTemplate>
+</Card>
+
